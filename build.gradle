@@ -18,6 +18,8 @@ dependencies {
     compile 'org.slf4j:slf4j-simple:1.7.30'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
     testImplementation 'com.codeborne:selenide:5.18.0'
+    compile 'org.projectlombok:lombok:1.18.18'
+
 }
 test {
     useJUnitPlatform()
