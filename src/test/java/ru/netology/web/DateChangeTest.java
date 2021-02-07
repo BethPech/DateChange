@@ -24,6 +24,7 @@ public class DateChangeTest {
     void setUpAll() {
         open("http://localhost:9999");
     }
+
     @Test
     void shouldTestCorrectForm() {
         $("[data-test-id='city'] input").setValue(city);
@@ -34,7 +35,7 @@ public class DateChangeTest {
         $("[data-test-id='agreement']").click();
         $$("button").find(exactText("Запланировать")).click();
         $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(12));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на "+dateOfDelivery));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + dateOfDelivery));
         $("[data-test-id=success-notification] button").click();
     }
 
@@ -48,7 +49,7 @@ public class DateChangeTest {
         $("[data-test-id='agreement']").click();
         $$("button").find(exactText("Запланировать")).click();
         $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(12));
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на "+dateOfDelivery));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + dateOfDelivery));
         $("[data-test-id=success-notification] button").click();
 
         $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
@@ -56,7 +57,7 @@ public class DateChangeTest {
         $$("button").find(exactText("Запланировать")).click();
         $("[data-test-id='replan-notification'] .notification__content").shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
         $$("[data-test-id='replan-notification'] button").find(exactText("Перепланировать")).click();
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на "+dateOfDeliveryAnother));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + dateOfDeliveryAnother));
     }
 
     @Test
@@ -138,12 +139,21 @@ public class DateChangeTest {
         $("[data-test-id='phone'] input").setValue(phone);
         $("[data-test-id='agreement']").click();
         $$("button").find(exactText("Запланировать")).click();
-        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на "+dateOfDelivery));
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + dateOfDelivery));
         $("[data-test-id=success-notification] button").click();
 
     }
 
-
-
-
+    @Test
+    void shouldNotSubmitWithNameUsingLowerCase() {
+        $("[data-test-id='city'] input").setValue(city);
+        $("[data-test-id='date'] input").doubleClick().sendKeys(Keys.BACK_SPACE);
+        $("[placeholder='Дата встречи']").setValue(dateOfDelivery);
+        $("[data-test-id='name'] input").setValue(name.toLowerCase());
+        $("[data-test-id='phone'] input").setValue(phone);
+        $("[data-test-id='agreement']").click();
+        $$("button").find(exactText("Запланировать")).click();
+        $("[data-test-id=success-notification] .notification__content").shouldHave(text("Встреча успешно запланирована на " + dateOfDelivery));
+        $("[data-test-id=success-notification] button").click();
+    }
 }
